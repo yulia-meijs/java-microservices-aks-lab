@@ -16,7 +16,7 @@ spec:
         app: vets-service
     spec:
       containers:
-      - image: acrpetclinicyulia2bfed5.azurecr.io/spring-petclinic-vets-service:2.7.6
+      - image: acrpetclinicyulia2bfed5.azurecr.io/spring-petclinic-vets-service:2.7.7
         name: vets-service
         env:
         - name: "CONFIG_SERVER_URL"
@@ -24,6 +24,18 @@ spec:
             configMapKeyRef:
               name: config-server
               key: CONFIG_SERVER_URL
+        - name: "APPLICATIONINSIGHTS_CONNECTION_STRING"
+          valueFrom:
+            configMapKeyRef:
+              name: config-server
+              key: APPLICATIONINSIGHTS_CONNECTION_STRING
+        - name: "APPLICATIONINSIGHTS_CONFIGURATION_CONTENT"
+          value: >-
+            {
+                "role": {   
+                    "name": "vets-service"
+                  }
+            }
         # - name: SPRING_DATASOURCE_USERNAME
         #   valueFrom:
         #     secretKeyRef:

@@ -26,9 +26,6 @@ ARG ARTIFACT_NAME
 ARG APP_PORT
 ARG VERSION
 
-# Set the working directory in the container
-WORKDIR /app
-
 # Copy the application artifact from the builder stage
 
 COPY --from=builder /app/${ARTIFACT_NAME}/target/${ARTIFACT_NAME}-${VERSION}.jar app.jar
@@ -44,4 +41,4 @@ RUN mv applicationinsights-agent-3.4.3.jar ai.jar
 EXPOSE ${APP_PORT} 8778 9779
 
 # Run the jar file
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-javaagent:/ai.jar","-jar","/app.jar"]

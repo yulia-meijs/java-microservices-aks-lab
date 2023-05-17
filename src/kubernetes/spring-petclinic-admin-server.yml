@@ -16,7 +16,7 @@ spec:
         app: admin-server
     spec:
       containers:
-      - image: acrpetclinicyulia2bfed5.azurecr.io/spring-petclinic-admin-server:2.7.6
+      - image: acrpetclinicyulia2bfed5.azurecr.io/spring-petclinic-admin-server:2.7.7
         name: admin-server
         env:
         - name: "CONFIG_SERVER_URL"
@@ -24,6 +24,19 @@ spec:
             configMapKeyRef:
               name: config-server
               key: CONFIG_SERVER_URL
+        - name: "APPLICATIONINSIGHTS_CONNECTION_STRING"
+          valueFrom:
+            configMapKeyRef:
+              name: config-server
+              key: APPLICATIONINSIGHTS_CONNECTION_STRING
+        - name: "APPLICATIONINSIGHTS_CONFIGURATION_CONTENT"
+          value: >-
+            {
+                "role": {   
+                    "name": "admin-server"
+                  }
+            }
+
         imagePullPolicy: Always
         livenessProbe:
           failureThreshold: 3
